@@ -1,0 +1,60 @@
+# script instala 1.0.3 criado em 20-03-2023.
+
+# Limpa a tela.
+clear
+# Habilita a internet wifi.
+#iwctl --passphrase Emmanuel2310 station wlan0 connect Chico_Xavier
+
+# inicia o script archinstall.
+#archinstall
+
+#Incluir usuarui ni sudoers
+sudo nano /etc/sudoers
+
+# Instala aplicativos com pacman.
+pacman -S grub-customizer gnome gnome-tweaks gnome-terminal gdm gnome-software-packagekit-plugin gufw fwupd sassc chromium blueman bluez bluez-utils neofetch cmatrix git nano wget curl ffmpeg gst-plugins-ugly gst-plugins-good gst-plugins-base gst-plugins-bad gst-libav gstreamer
+
+# arquivo configuração bash.
+cp bashrc ~/.bashrc
+
+# Arquivo de configuração do pacman.conf .
+cp pacman.conf /etc/pacman.conf
+
+# Arquivo rc.conf
+cp rc.conf /etc/rc.conf
+
+# Arquivo hosts
+cp hosts /etc/hosts
+
+# Imagem background
+cp background ~/.config/background
+cp grub-background.jpg ~/.config/grub-background.jpg
+
+# Instalar gdm-tools.
+git clone https://github.com/realmazharhussain/gdm-tools.git
+cd gdm-tools
+./install.sh
+set-gdm-theme -s default ~/.config/grub-background.jpg
+cd ..
+
+# Instalar dash to dock.
+git clone https://github.com/micheleg/dash-to-dock.git
+cd dash-to-dock
+make && make install
+cd ..
+
+# Instal o Yay.
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+yay -Y –gendb
+cd ..
+
+# Habilita o serviço GDM no sistema.
+systemctl enable gdm.service
+
+# Habilitar serviço bluetooth.
+systemctl enable bluetooth.service
+
+#Habilitar wifi.
+nmcli device wifi connect Chico_Xavier password Emmanuel2310
